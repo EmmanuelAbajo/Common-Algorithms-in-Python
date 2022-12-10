@@ -5,12 +5,15 @@ class Graph:
     def __init__(self, nodes: int) -> None:
         self.N = nodes
         self.graph = defaultdict(list)
+        self.weights = dict()
 
     def __repr__(self) -> str:
         return self.graph.__repr__()
 
-    def addEdge(self,node,adjacent_node) -> None:
+    def addEdge(self,node,adjacent_node,weight=1) -> None:
         self.graph[node].append(adjacent_node)  
+        self.weights[(node, adjacent_node)] = weight
+        self.weights[(adjacent_node, adjacent_node)] = weight
 
     def bfs(self, source: int) -> None:
         """Implementation of BFS using a queue data structure"""
@@ -50,7 +53,6 @@ class Graph:
     def printAllPathsUtil(self, source: int, dest: int, visited: list, path: list) -> None:   
         visited[source] = True
         path.append(source)
-
         if source == dest:
             print(path)
         else:
@@ -60,7 +62,38 @@ class Graph:
         path.pop()
         visited[source] = False
 
-   
+    def shortest_path(self, source: int, dest: int):
+        # shortest paths is a dict of nodes
+        # whose value is a tuple of (previous node, weight)
+        shortest_paths = {source: (None, 0)}
+        visited = [False for _ in range(self.N)]
+        while source != dest:
+            visited[source] = True
+            weight_to_current_node = shortest_paths[source][1]
+            for i in self.graph[source]:
+                weight = self.weights[source, i] + weight_to_current_node
+                if i not in shortest_paths:
+                    shortest_paths[i] = (source, weight)
+                else:
+                    current_shortest_weight = shortest_paths[i][1]
+                    if current_shortest_weight > weight:
+                        shortest_paths[i] = (source, weight)
+            
+            next_destinations = { node: shortest_paths[node] for node in shortest_paths if visited[node] == False}
+            if not next_destinations:
+                return "Route Not Possible"
+            # next node is the destination with the lowest weight
+            source = min(next_destinations, key=lambda k: next_destinations[k][1])
+       
+        path = []
+        while source is not None:
+            path.append(source)
+            next_node = shortest_paths[source][0]
+            source = next_node
+        # Reverse path
+        path = path[::-1]
+        
+        print(path)
    
 
 g = Graph(8)
@@ -86,6 +119,7 @@ g.addEdge(7, 4)
 g.addEdge(7, 5)
 
 print(g)
-g.bfs(2)
+# g.bfs(2)
 # g.printAllPaths(0,7)
-g.dfs(2)
+# g.dfs(2)
+g.shortest_path(2,7)
