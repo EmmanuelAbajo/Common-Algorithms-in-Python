@@ -13,7 +13,7 @@ class Graph:
     def addEdge(self,node,adjacent_node,weight=1) -> None:
         self.graph[node].append(adjacent_node)  
         self.weights[(node, adjacent_node)] = weight
-        self.weights[(adjacent_node, adjacent_node)] = weight
+        self.weights[(adjacent_node, node)] = weight
 
     def bfs(self, source: int) -> None:
         """Implementation of BFS using a queue data structure"""
@@ -62,9 +62,10 @@ class Graph:
         path.pop()
         visited[source] = False
 
-    def shortest_path(self, source: int, dest: int):
+    def shortest_path(self, src: int, dest: int) -> None:
         # shortest paths is a dict of nodes
         # whose value is a tuple of (previous node, weight)
+        source = src
         shortest_paths = {source: (None, 0)}
         visited = [False for _ in range(self.N)]
         while source != dest:
@@ -93,33 +94,33 @@ class Graph:
         # Reverse path
         path = path[::-1]
         
-        print(path)
+        print(f'Shortest path from {src} to {dest}: {path}')
    
+if __name__ == '__main__':
+    g = Graph(8)
+    g.addEdge(0, 1)
+    g.addEdge(0, 2)
+    g.addEdge(1, 0)
+    g.addEdge(1, 3)
+    g.addEdge(1, 4)
+    g.addEdge(1, 2)
+    g.addEdge(2, 0)
+    g.addEdge(2, 1)
+    g.addEdge(2, 5)
+    g.addEdge(2, 6)
+    g.addEdge(3, 1)
+    g.addEdge(3, 7)
+    g.addEdge(4, 1)
+    g.addEdge(4, 7)
+    g.addEdge(5, 2)
+    g.addEdge(5, 7)
+    g.addEdge(6, 2)
+    g.addEdge(7, 3)
+    g.addEdge(7, 4)
+    g.addEdge(7, 5)
 
-g = Graph(8)
-g.addEdge(0, 1)
-g.addEdge(0, 2)
-g.addEdge(1, 0)
-g.addEdge(1, 3)
-g.addEdge(1, 4)
-g.addEdge(1, 2)
-g.addEdge(2, 0)
-g.addEdge(2, 1)
-g.addEdge(2, 5)
-g.addEdge(2, 6)
-g.addEdge(3, 1)
-g.addEdge(3, 7)
-g.addEdge(4, 1)
-g.addEdge(4, 7)
-g.addEdge(5, 2)
-g.addEdge(5, 7)
-g.addEdge(6, 2)
-g.addEdge(7, 3)
-g.addEdge(7, 4)
-g.addEdge(7, 5)
-
-print(g)
-# g.bfs(2)
-# g.printAllPaths(0,7)
-# g.dfs(2)
-g.shortest_path(2,7)
+    print(g)
+    # g.bfs(2)
+    # g.printAllPaths(0,7)
+    # g.dfs(2)
+    g.shortest_path(2,7)
