@@ -1,10 +1,10 @@
-class Node:
-    def __init__(self, data) -> None :
-        self.data = data
-        self.next = None
+from dataclasses import dataclass
 
-    def __repr__(self) -> str:
-        return str(self.data)
+@dataclass
+class Node:
+    data: any
+    def __post_init__(self) -> None:
+        self.next = None
         
 class LinkedList:
     def __init__(self, head: Node) -> None:
