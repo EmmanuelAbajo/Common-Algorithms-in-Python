@@ -7,11 +7,13 @@ class Node:
         self.next = None
         
 class LinkedList:
+    """If the head of a linkedlist is null, the list is empty.
+    The linkedlist ends when the next pointer is null"""
     def __init__(self, head: Node) -> None:
         self.head = head
 
     def __repr__(self) -> str:
-        """This is not effective because it uses space
+        """This is not very efficient because it uses space
         and time complexity of O(n)"""
         llist = []
         if not self.head:
@@ -84,7 +86,17 @@ class LinkedList:
                 break
             idx += 1
             current = current.next    
-            
+    
+    def has_cycle(head: Node) -> int:
+        visited = []
+        current = head
+        while current.next:
+            if current in visited:
+                return 1
+            visited.append(current)
+            current = current.next
+        return 0    
+
 if __name__ == '__main__':
     head = Node(2)
     llist = LinkedList(head)
