@@ -9,7 +9,7 @@ class Node:
 class LinkedList:
     """If the head of a linkedlist is null, the list is empty.
     The linkedlist ends when the next pointer is null"""
-    def __init__(self, head: Node) -> None:
+    def __init__(self, head: Node = None) -> None:
         self.head = head
 
     def __repr__(self) -> str:
@@ -95,11 +95,13 @@ class LinkedList:
                 return 1
             visited.append(current)
             current = current.next
-        return 0    
+        return 0  
+
+    def is_empty(self) -> bool:
+        return self.head is None   
 
 if __name__ == '__main__':
-    head = Node(2)
-    llist = LinkedList(head)
+    llist = LinkedList()
     llist.append(3)
     llist.append(4)
     llist.append(5)
@@ -107,4 +109,5 @@ if __name__ == '__main__':
     llist.prepend(1)
     llist.delete(5)
     llist.insert(7,2)
-    print(llist)            
+    print(llist)   
+    print(llist.is_empty())         
