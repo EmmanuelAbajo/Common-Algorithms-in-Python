@@ -6,7 +6,7 @@ def bubble_sort(a: list, n: int) -> None :
             if(a[j] > a[j+1]):
                 a[j], a[j+1] = a[j+1], a[j]
                 noOfSwaps += 1
-        totalSwaps = totalSwaps + noOfSwaps
+        totalSwaps+=noOfSwaps
         if (noOfSwaps == 0):
             break
     
@@ -26,7 +26,7 @@ def minimumSwaps(arr: list) -> int:
         if arr[i] != i+1:
             arr[arr.index(i+1)] = arr[i]
             arr[i] = i+1
-            noOfSwaps += 1
+            noOfSwaps+=1
     return noOfSwaps        
 
 # Optimal solution
@@ -35,5 +35,5 @@ def minimum_swaps(arr: list) -> int:
     for i in range(len(arr)):
         while arr[i] != i+1:
             arr[arr[i]-1], arr[i] = arr[i], arr[arr[i]-1]
-            nswaps += 1            
+            nswaps+=1            
     return nswaps  
